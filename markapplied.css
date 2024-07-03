@@ -1,0 +1,30 @@
+
+span.smart_apply_match, div.smart_apply_match, h2.smart_apply_match, p.smart_apply_match {
+    color: red !important;
+    font-style: italic;
+  }
+
+a.smart_apply_match>span, a.smart_apply_title_match, h2.smart_apply_title_match  {
+  color: red !important;
+  font-style: italic;
+}
+
+div>a.applied, div.applied {
+  background-color: #faeea2 !important;
+  background-image: none !important;
+}
+
+div>a.title_applied, div.applied.title_applied {
+  background-color: #f2bdbd !important;
+  background-image: none !important;
+}
+
+/*Bulit In Matches */
+
+div.job-match-item.applied div.container:not(.py-lg) div.bg-white {
+  background-color: #faeea2 !important;
+}
+
+div.job-match-item.applied.title_applied div.container:not(.py-lg) div.bg-white {
+  background-color: #f2bdbd !important;
+}

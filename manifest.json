@@ -1,0 +1,78 @@
+{
+    "manifest_version": 2,
+    "name":"SmartApply",
+    "version":"1.0",
+
+    "description": "Makes applying for jobs smarter",
+    "homepage_url": "htttp://cleaner.codes",
+
+    "icons": {
+        "48": "icons/smartapply-48.png"
+    },
+
+    "permissions": ["activeTab", "clipboardWrite", "https://doc-10-0g-sheets.googleusercontent.com/", "https://docs.google.com/spreadsheets/"],
+
+    "browser_action": {
+        "default_icon": "icons/smartapply-48.png",
+        "default_title": "smartapply",
+        "default_popup": "popup/copy-clicker.html"
+    },
+
+    "web_accessible_resources": [
+        "snackbar.css"
+    ],
+
+    "content_scripts": [
+       
+        {
+            "matches": ["*://www.linkedin.com/jobs/search/*", "*://www.linkedin.com/jobs/collections/*"],
+            "js": ["markapplied_linkedin.js"]
+        },
+        {
+            "matches": ["*://www.linkedin.com/jobs/*"],
+            "js": ["copy_linkedin.js"]
+        },
+
+        {
+            "matches": ["*://www.indeed.com/*"],
+            "js": ["markapplied_indeed.js", "copy_indeed.js"]
+        },
+        {
+            "matches": [ "*://jobright.ai/*"],
+            "js": ["markapplied_jobright.js", "copy_jobright.js"]
+        },
+        {
+            "matches": [ "*://builtin.com/jobs/*"],
+            "js": ["markapplied_builtin.js"]
+        },
+        {
+            "matches":["*://builtin.com/home/jobs/matches*"],
+            "js": ["markapplied_builtin_matches.js"]
+        },
+        {
+            "matches": ["*://builtin.com/job/*"],
+            "js": ["copy_builtin.js"]
+        },
+        {
+            "matches": [ "*://wellfound.com/jobs*"],
+            "js": ["markapplied_wellfound.js", "copy_wellfound.js"]
+        },
+        {
+            "matches": [ "*://engmgrjobs.com/*"],
+            "js": ["markapplied_engmgrjobs.js", "copy_engmgrjobs.js"]
+        },
+        
+        {
+            "matches": ["*://www.linkedin.com/jobs/*", "*://www.indeed.com/*", "*://jobright.ai/jobs/info/*", "*://builtin.com/job/*", "*://wellfound.com/jobs*", "*://engmgrjobs.com/*"],
+            "js":["copy_clicker_base.js"]
+            
+        },
+
+        {
+            "matches": ["*://www.linkedin.com/jobs/search/*", "*://www.linkedin.com/jobs/collections/*", "*://www.indeed.com/*", "*://jobright.ai/*", "*://builtin.com/jobs/*", "*://builtin.com/home/jobs/matches*", "*://wellfound.com/jobs",  "*://engmgrjobs.com/*"],
+            "js": ["markapplied_db.js", "markapplied.js"],
+            "css": ["snackbar.css", "markapplied.css"]
+        }
+              
+    ]
+}
