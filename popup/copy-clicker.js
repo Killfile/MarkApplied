@@ -28,6 +28,10 @@ function listenForClicks() {
         //   });
         // });
       }
+
+      function copy_skills(tabs) {
+        browser.tabs.sendMessage(tabs[0].id, {command: "copy_skills"})
+      }
   
       /**
        * Remove the page-hiding CSS from the active tab,
@@ -53,7 +57,7 @@ function listenForClicks() {
        * then call "smartapply()" or "reset()" as appropriate.
        */
       if (e.target.tagName !== "BUTTON" || !e.target.closest("#popup-content")) {
-        console.debug("Clicked on something that's not a button or isn't in the #popup-content element")
+        console.error("Clicked on something that's not a button or isn't in the #popup-content element")
         // Ignore when click is not on a button within <div id="popup-content">.
         return;
       }
@@ -63,8 +67,15 @@ function listenForClicks() {
           .query({ active: true, currentWindow: true })
           .then(reset)
           .catch(reportError);
-      } else {
-        console.debug("Non-reset path in copy-clicker.js:listenForClicks")
+      }
+      else if (e.target.id === "copy_skills") {
+        browser.tabs
+          .query({ active: true, currentWindow: true })
+          .then(copy_skills)
+          .catch(reportError);
+      }
+      else {
+        console.error("Non-reset path in copy-clicker.js:listenForClicks")
         browser.tabs
           .query({ active: true, currentWindow: true })
           .then(smartapply)
@@ -87,3 +98,5 @@ browser.tabs
     .executeScript({file: "/content_scripts/cc_content_script.js"})
     .then(listenForClicks)
     .catch(reportExecuteScriptError)
+
+    //# sourceURL=popup\copy-clicker.js

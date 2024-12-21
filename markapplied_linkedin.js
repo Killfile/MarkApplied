@@ -72,11 +72,14 @@ var allContainers = []
 
 function style_page() {
     console.debug("markapplied_linkedin:style_page")
-    allContainers = document.querySelectorAll("div.job-card-container:not(.smart-apply-evaluated)")
+    allContainers = document.querySelectorAll(`[data-view-name*="job-card"]:not(.smart-apply-evaluated)`)
     for(i=0;i<allContainers.length;i++) {
-        let company_span = allContainers[i].querySelector("span.job-card-container__primary-description")
+        let company_span = allContainers[i].querySelector("div.artdeco-entity-lockup__subtitle")
         let company_text = sanatize(company_span.textContent.trim())
-        let title_container = allContainers[i].querySelector("a.job-card-container__link")
+        let title_container = allContainers[i].querySelector(".job-card-job-posting-card-wrapper__title")
+        if (title_container === null) {
+            title_container = allContainers[i].querySelector(".job-card-list__title--link")
+        }
         let title_drilldown = title_container.querySelector("span>strong")
         let title_text = sanatize(title_drilldown.textContent.trim())
         allContainers[i].classList.add("smart-apply-evaluated")
@@ -92,5 +95,6 @@ function style_page() {
             //Company and Title Match
         }
     }
+    console.debug("Finished: markapplied_linkedin:style_page")
                
 }

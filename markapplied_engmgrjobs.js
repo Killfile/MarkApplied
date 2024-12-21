@@ -51,7 +51,8 @@ function style_page() {
                 add_last_applied_as(allContainers[i], last_app[0][1], last_app[0][2])
             }
             allContainers[i].classList.add("applied")
+            allContainers[i].classList.add("smart-apply-evaluated")
         }
-        allContainers[i].classList.add("smart-apply-evaluated")
+        
     }
 }

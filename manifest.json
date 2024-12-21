@@ -10,7 +10,7 @@
         "48": "icons/smartapply-48.png"
     },
 
-    "permissions": ["activeTab", "clipboardWrite", "https://doc-10-0g-sheets.googleusercontent.com/", "https://docs.google.com/spreadsheets/"],
+    "permissions": ["activeTab", "downloads", "clipboardWrite", "https://*.googleusercontent.com/", "https://docs.google.com/spreadsheets/", "https://api.openai.com/v1/chat/completions"],
 
     "browser_action": {
         "default_icon": "icons/smartapply-48.png",
@@ -30,7 +30,7 @@
         },
         {
             "matches": ["*://www.linkedin.com/jobs/*"],
-            "js": ["copy_linkedin.js"]
+            "js": [ "chatgpt_token.js", "chatgpt.js", "copy_linkedin.js"]
         },
 
         {

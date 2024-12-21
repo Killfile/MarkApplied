@@ -1,4 +1,5 @@
-const csv_url = "LINK TO YOUR PUBLISHED CSV OUTPUT FROM GOOGLE SHEETS GOES HERE"
+const csv_url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTIwK_KUhb5Y1gBEA4IhrEzM7LBvXgbcG2v78vhNZpgcRwep_-vSwn3OwdfH_PHvc6Ruesc0KIr1Shk/pub?gid=1302876786&single=true&output=csv"
+//const csv_url = "https://doc-14-5s-sheets.googleusercontent.com/pub/54bogvaave6cua4cdnls17ksc4/rqskimaim63091nlbi7l175878/1732287955000/117437002811057735934/*/e@2PACX-1vTIwK_KUhb5Y1gBEA4IhrEzM7LBvXgbcG2v78vhNZpgcRwep_-vSwn3OwdfH_PHvc6Ruesc0KIr1Shk?gid=1302876786&single=true&output=csv"
 
 /*
 about:debugging#/runtime/this-firefox
