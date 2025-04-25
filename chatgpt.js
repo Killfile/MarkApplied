@@ -13,7 +13,7 @@ function GetKeywordsFromJobDescription(token, job_description) {
             "messages": [
                 {
                     "role": "developer",
-                    "content": "You identify they keywords that hiring managers are likely to search for when identifying high quality candidates for a given job description. You pay close attention to programing languages, frameworks, software products, processes, and areas of experience."
+                    "content": "You identify the ten most important keywords that hiring managers are likely to search for when identifying high quality candidates for a given job description. You pay close attention to programing languages, frameworks, software products, processes, and areas of experience."
                 },
                 {
                     "role": "user",

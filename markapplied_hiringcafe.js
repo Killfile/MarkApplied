@@ -30,12 +30,13 @@ function add_last_applied_as(container, title, date) {
 }
 
 function style_page() {
-    console.debug("markapplied_engmrgjobs:style_page")
-    allContainers = document.querySelectorAll("a.py-6:not(.smart-apply-evaluated)")
+    console.debug("markapplied_hiringcafe:style_page")
+    allContainers = document.querySelectorAll("div.infinite-scroll-component div.relative.bg-white")
     for(i=0;i<allContainers.length;i++) {
-        company_element = allContainers[i].querySelector('p.leading-relaxed.text-gray-900')
-        company_text = sanitize_company_name(get_raw_text_from_element(company_element)).trim()
-        title_element = allContainers[i].querySelector("h2")
+        company_element = allContainers[i].querySelector('div.flex.flex-col.w-fit.mr-12>div>span')
+        //company_text = sanitize_company_name(get_raw_text_from_element(company_element)).trim()
+        company_text = sanitize_company_name(company_element.textContent).trim()
+        title_element = allContainers[i].querySelector("div.flex.flex-col.w-fit.mr-12>span")
         title_text = title_element.textContent.trim()
         company_matches = array_matches_company_name(company_text)
         if(company_matches.length > 0) {
@@ -44,11 +45,7 @@ function style_page() {
             if(title_matches.length > 0) {
                 title_element.classList.add("smart_apply_title_match")
                 allContainers[i].classList.add("title_applied")
-
-                applied_str = title_matches[0][3]
-                if(title_matches[0][4] != '')
-                    applied_str += " rejected on " + title_matches[0][4]
-                add_last_applied(allContainers[i],applied_str)
+                add_last_applied(allContainers[i],title_matches[0][3])
             }
             else {
                 last_app = company_matches.slice(-1)

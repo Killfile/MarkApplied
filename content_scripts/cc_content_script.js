@@ -32,6 +32,11 @@
         //return navigator.clipboard.writeText(text)
     }
 
+    function generate_resume(text, company, title) {
+      array_argument = "[\"" + text.replaceAll("\r\n","\",\"") + "\"]"
+      window.open("http://localhost:5000/compute_intersection/"+company+"/"+title+"?skills="+array_argument,'_blank').focus()
+    }
+
     /**
      * Listen for messages from the background script.
      * Call "insertBeast()" or "removeExistingBeasts()".
@@ -60,6 +65,21 @@
             text_to_copy = "Unable to to copy: " + error
           }
         break;
+        case "generate_resume":
+          try {
+            job_details = copy_job_details().split("\t")
+            console.info("Found deets: " + job_details)
+            company = job_details[0]
+            title = job_details[1].replace("/"," or ")
+            text_to_copy = copy_resume_keywords()
+              .then( blink_snackbar("Launching Resazine..."))
+              .then(skills=>skills.replace("C#","C%23"))
+              .then(skills=>generate_resume(skills, company, title))
+          }
+          catch(error) {
+            console.error(error)
+            text_to_copy = "Unable to to copy: " + error
+          }
       }
 
       /* console.log("!Message: "+ message.command)

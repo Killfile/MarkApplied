@@ -15,6 +15,31 @@ function copy_job_details() {
 }
 
 function copy_resume_keywords() {
+    responsibilities = document.querySelector("section.index_sectionContent__zTR73:nth-child(3) > div:nth-child(1) > h2:nth-child(2)").parentElement.parentElement.textContent
+    required = document.querySelector("div.index_flex-col__Y_QL8:nth-child(4)").textContent
+    try {
+        preferred = document.querySelector("div.index_flex-col__Y_QL8:nth-child(5)").textContent
+    } catch (error) {
+        console.debug("No preferred qualifications found...")
+        preferred = ""
+    }
+    
+
+    job_descrption = responsibilities + "\r\n" + required + "\r\n" + preferred
+    console.log("Job description extracted as: " + job_descrption)
+    const keywords_promise = GetKeywordsFromJobDescription(GetToken(), job_descrption)
+    return keywords_promise.then(keywords=>{
+        console.debug("Getting keywords from bullets...")
+        bullets_section = document.querySelectorAll("#skills-section > div")[1]
+        bullets = bullets_section.querySelectorAll("span")
+        bullets.forEach(b => {
+            keywords.push(b.textContent)
+        });
+        return keywords.join("\r\n")
+    })
+}
+
+function copy_resume_keywords_old() {
     return new Promise((resolve, reject) => {
         console.debug("Copy resume keywords in copy_jobright.js")
         bullets_section = document.querySelectorAll("#skills-section > div")[1]

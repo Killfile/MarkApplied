@@ -32,6 +32,10 @@ function listenForClicks() {
       function copy_skills(tabs) {
         browser.tabs.sendMessage(tabs[0].id, {command: "copy_skills"})
       }
+
+      function generate_resume(tabs) {
+        browser.tabs.sendMessage(tabs[0].id, {command: "generate_resume"})
+      }
   
       /**
        * Remove the page-hiding CSS from the active tab,
@@ -72,6 +76,12 @@ function listenForClicks() {
         browser.tabs
           .query({ active: true, currentWindow: true })
           .then(copy_skills)
+          .catch(reportError);
+      }
+      else if (e.target.id === "generate_resume") {
+        browser.tabs
+          .query({ active: true, currentWindow: true })
+          .then(generate_resume)
           .catch(reportError);
       }
       else {

@@ -60,7 +60,7 @@ function add_to_db(jobs) {
         let transaction = create_transaction([applications_table], "readwrite")
         
 
-        transaction.oncomplete = (event) => { console.log("Transaction done!")}
+        transaction.oncomplete = (event) => { console.debug("Transaction done!")}
         transaction.onerror = (event) => { console.error("Transaction failed")}
         trans_objectStore = transaction.objectStore(applications_table) 
         //trans_objectStore.clear()
@@ -86,7 +86,7 @@ function add_to_mem_cache(jobs) {
         _add_to_mem_cache_override(jobs)
     }
     else {
-        console.log("No meme-cache is defined")
+        console.error("No meme-cache is defined")
     }
 }
 
@@ -115,7 +115,7 @@ class JobApplication {
 
 function make_fetch_happen() {
     
-    console.log("Fetching...")
+    console.debug("Fetching...")
     blink_snackbar("Fetching...")
     return fetch(csv_url)
         .then(r=>{
@@ -226,11 +226,11 @@ function on_company_match(company_name, company_text_element, outer_job_containe
         let company_matches = query_result.filter((r)=> r.company == sanatize(company_name))
         
         if (company_matches.length > 0) {
-            console.debug("Company match on " + company_name + " == " + company_matches[0].company)
+            console.info("Company match on " + company_name + " == " + company_matches[0].company)
             callback(company_matches, company_text_element, outer_job_container)
         }
         else
-            console.debug("No matches for " + company_name)
+            console.info("No company matches for " + company_name)
     }
 }
 
@@ -241,12 +241,12 @@ function on_match_inner(query_result, company_name, title, company_text_element,
     let matches = query_result.filter((r)=> r.company == sanitized_company_name && r.title == sanitized_title)
     
     if (matches.length > 0) {
-        console.debug("Title match on " + company_name + "/" + title + " == " + matches[0].company + "/" + matches[1])
+        console.info("Title match on " + company_name + "/" + title + " == " + matches[0].company + "/" + matches[1])
         title_callback(matches, title_text_element, outer_job_container)
     }
     else
     {
-        console.debug("No matches for " + title + " at " + company_name)
+        console.info("No matches for " + title + " at " + company_name)
         matches = query_result.filter((r)=> r.company == sanitized_company_name)
         if(matches.length > 0)
             company_callback(matches, company_text_element, outer_job_container)
@@ -275,16 +275,16 @@ function on_match(company_name, title, company_text_element, title_text_element,
             let matches = query_result.filter((r)=> r.company == sanitized_company_name && r.title == sanitized_title)
             
             if (matches.length > 0) {
-                console.debug("Title match on " + company_name + "/" + title + " == " + matches[0].company + "/" + matches[1])
+                console.info("Title match on " + company_name + "/" + title + " == " + matches[0].company + "/" + matches[1])
                 new Promise(function(resolve,reject) {
-                    console.log("Title Callback is: " + title_callback)
+                    console.debug("Title Callback is: " + title_callback)
                     title_callback(matches, title_text_element, outer_job_container)
                     resolve()
                 }).then(resolve())
             }
             else
             {
-                console.debug("No matches for " + title + " at " + company_name)
+                console.info("No matches for " + title + " at " + company_name)
                 let matches = query_result.filter((r)=> r.company == sanitized_company_name)
                 if(matches.length > 0)
                     new Promise(function(resolve,reject) {

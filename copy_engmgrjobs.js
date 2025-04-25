@@ -32,11 +32,19 @@ function copy_job_details() {
         alert("Couldn't find outer container!")
     }
     console.log(selected_card)
-    title = selected_card.querySelector('h2').textContent
+    title = selected_card.querySelector('h2').textContent.trim()
     console.log(title)
-    company = get_company_text(selected_card)
+    company = get_company_text(selected_card).trim()
     console.log(company)
     link = window.location.href
     console.log(link)
     return text_to_copy = [company, title, "Engmgrjobs", link, "", format_date(new Date())].join("\t")
+}
+
+function copy_resume_keywords() {
+    job_descrption = document.getElementsByClassName("content")[0].textContent
+    const keywords_promise = GetKeywordsFromJobDescription(GetToken(), job_descrption)
+    return keywords_promise.then(keywords=>{
+        return keywords.join("\r\n")
+    })
 }
