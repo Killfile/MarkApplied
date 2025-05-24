@@ -313,8 +313,8 @@ function styleSpans() {
     console.debug("styleSpans...")
     try {
         value = markapplied_cache.check_and_update().then(style_page)
-        console.log("Returned Value from cache update...")
-        console.log(value)
+        console.info("Returned Value from cache update...")
+        console.info(value)
     }
     catch (error) {
         console.error("Error in style strategy: " + error)

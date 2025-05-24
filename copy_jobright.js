@@ -14,6 +14,15 @@ function copy_job_details() {
     return text_to_copy = [company, title, "Jobright", link, "", format_date(new Date())].join("\t")
 }
 
+function extractTerms(arr) {
+    return arr.flatMap(item => {
+        const match = item.match(/^(.*) \((.*)\)$/);
+        return match ? [match[1], match[2]] : [item];
+    });
+}
+
+
+
 function copy_resume_keywords() {
     responsibilities = document.querySelector("section.index_sectionContent__zTR73:nth-child(3) > div:nth-child(1) > h2:nth-child(2)").parentElement.parentElement.textContent
     required = document.querySelector("div.index_flex-col__Y_QL8:nth-child(4)").textContent
@@ -35,6 +44,7 @@ function copy_resume_keywords() {
         bullets.forEach(b => {
             keywords.push(b.textContent)
         });
+        keywords = extractTerms(keywords)
         return keywords.join("\r\n")
     })
 }

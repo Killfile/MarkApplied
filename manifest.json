@@ -10,12 +10,16 @@
         "48": "icons/smartapply-48.png"
     },
 
-    "permissions": ["activeTab", "downloads", "clipboardWrite", "https://*.googleusercontent.com/", "https://docs.google.com/spreadsheets/", "https://api.openai.com/v1/chat/completions"],
+    "permissions": ["activeTab", "downloads", "clipboardWrite", "https://*.googleusercontent.com/", "https://docs.google.com/spreadsheets/", "https://api.openai.com/v1/chat/completions", "http://localhost:5000/start_resume/"],
 
     "browser_action": {
         "default_icon": "icons/smartapply-48.png",
         "default_title": "smartapply",
         "default_popup": "popup/copy-clicker.html"
+    },
+
+    "background": {
+        "scripts": ["background.js"]
     },
 
     "web_accessible_resources": [
@@ -38,7 +42,7 @@
             "js": ["markapplied_jobright.js", "copy_jobright.js"]
         },
         {
-            "matches": [ "*://builtin.com/jobs/*"],
+            "matches": [ "*://builtin.com/jobs*"],
             "js": ["markapplied_builtin.js"]
         },
         {
@@ -46,7 +50,7 @@
             "js": ["markapplied_builtin_matches.js"]
         },
         {
-            "matches": ["*://builtin.com/job/*"],
+            "matches": ["*://builtin.com/job/*", "*://builtin.com/home/jobs/matches*"],
             "js": ["copy_builtin.js"]
         },
         {
@@ -59,7 +63,7 @@
         },
         
         {
-            "matches": ["*://www.linkedin.com/jobs/*", "*://www.indeed.com/*", "*://jobright.ai/*", "*://builtin.com/job/*", "*://wellfound.com/jobs*", "*://engmgrjobs.com/*", "*://hiring.cafe/*"],
+            "matches": ["*://www.linkedin.com/jobs/*", "*://www.indeed.com/*", "*://jobright.ai/*", "*://builtin.com/*", "*://wellfound.com/jobs*", "*://engmgrjobs.com/*", "*://hiring.cafe/*"],
             "js":["copy_clicker_base.js", "chatgpt_token.js", "chatgpt.js"]
             
         },
@@ -78,6 +82,7 @@
                 "*://www.linkedin.com/jobs/*", 
                 "*://www.indeed.com/*", 
                 "*://jobright.ai/*", 
+                "*://builtin.com/job/*", 
                 "*://builtin.com/jobs/*", 
                 "*://builtin.com/home/jobs/matches*", 
                 "*://wellfound.com/jobs", 

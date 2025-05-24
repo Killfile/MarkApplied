@@ -32,9 +32,80 @@
         //return navigator.clipboard.writeText(text)
     }
 
-    function generate_resume(text, company, title) {
-      array_argument = "[\"" + text.replaceAll("\r\n","\",\"") + "\"]"
+    function generate_resume(skills, company, title) {
+      url = window.location.origin
+      if (url.includes("linkedin") === true) 
+        { 
+          generate_resume_by_get(skills, company, title)
+        }
+        else 
+        { 
+          generate_resume_by_post(skills, company, title, true) //add true to use fetch
+        }
+    }
+
+    function generate_resume_by_get(skills, company, title) {
+      array_argument = "[\"" + skills.replaceAll("\r\n","\",\"") + "\"]"
       window.open("http://localhost:5000/compute_intersection/"+company+"/"+title+"?skills="+array_argument,'_blank').focus()
+
+    }
+
+    function postRedirect(url, data) {
+      const form = document.createElement("form");
+      form.method = "POST";
+      form.action = url;
+      form.target = "_blank"
+
+      // Add data as hidden inputs
+      for (const key in data) {
+          if (data.hasOwnProperty(key)) {
+              const input = document.createElement("input");
+              input.type = "hidden";
+              input.name = key;
+              input.value = data[key];
+              form.appendChild(input);
+          }
+      }
+
+      document.body.appendChild(form);
+      form.submit();
+    }
+
+    function postDataByFetch(url, data) {
+      browser.runtime.sendMessage({
+        action: "sendData",
+        url: url,
+        data: data
+      }).then(response => {
+        console.log("Server response received in popup:", response);
+        window.open("http://localhost:5000/compute_intersection/"+response.response, "_blank")
+      }).catch(error => console.error("Message error:", error));
+    }
+  
+
+    function generate_resume_by_post(skills, company, title, useFetch=false) {
+      array_argument = "[\"" + skills.replaceAll("\r\n","\",\"") + "\"]"
+      
+      if(useFetch == false)
+        {
+          url = "http://localhost:5000/start_resume/"
+          data = {
+            "skills": array_argument,
+            "company": company,
+            "title": title,
+          }
+          postRedirect(url, data)
+        }
+        else
+        {
+          url = "http://localhost:5000/start_resume_by_fetch/"
+          data = {
+            "skills": JSON.parse(array_argument),
+            "company": company,
+            "title": title,
+          }
+          postDataByFetch(url,data)
+        }
     }
 
     /**
@@ -43,6 +114,7 @@
      */
     browser.runtime.onMessage.addListener((message) => {
       console.debug("cc_content_script.js recieved message: " + message.command)
+
       switch(message.command) {
         case "smartapply":
           try 
@@ -73,7 +145,7 @@
             title = job_details[1].replace("/"," or ")
             text_to_copy = copy_resume_keywords()
               .then( blink_snackbar("Launching Resazine..."))
-              .then(skills=>skills.replace("C#","C%23"))
+              .then(skills=>skills.replaceAll("C#","C%23"))
               .then(skills=>generate_resume(skills, company, title))
           }
           catch(error) {

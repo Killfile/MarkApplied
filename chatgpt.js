@@ -13,7 +13,7 @@ function GetKeywordsFromJobDescription(token, job_description) {
             "messages": [
                 {
                     "role": "developer",
-                    "content": "You identify the ten most important keywords that hiring managers are likely to search for when identifying high quality candidates for a given job description. You pay close attention to programing languages, frameworks, software products, processes, and areas of experience."
+                    "content": "You identify the twenty most important keywords that hiring managers are likely to search for when identifying high quality candidates for a given job description. You pay close attention to programing languages, frameworks, software products, processes, and areas of experience."
                 },
                 {
                     "role": "user",
@@ -57,7 +57,11 @@ function GetKeywordsFromJobDescription(token, job_description) {
         console.log(result_str)
         var parsed = JSON.parse(result_str)
         return parsed.keywords
-        
+    }).then(arr => {
+        return arr.flatMap(item => {
+            const match = item.match(/^(.*) \((.*)\)$/);
+            return match ? [match[1], match[2]] : [item];
+        });
     })
         .catch(error => {
             console.log('Something bad happened ' + error)

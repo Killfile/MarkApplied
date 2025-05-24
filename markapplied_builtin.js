@@ -1,14 +1,11 @@
 //col-12 col-lg-6
 
 function add_to_card(container) {
-    let endcap = container.querySelector("div.col-12.col-lg-6")
-
-    let prev_matches = endcap.querySelectorAll('p[added_by_markapplied="true"]')
-    prev_matches.forEach((element)=>element.remove())
+    let title_div = container.querySelector("div:nth-child(1) > div:nth-child(2) > div:nth-child(3)")
 
     let new_paragraph = document.createElement("p")
     new_paragraph.setAttribute("added_by_markapplied","true")
-    endcap.appendChild(new_paragraph)
+    title_div.appendChild(new_paragraph)
 
     return new_paragraph
 }
@@ -45,7 +42,7 @@ function style_page() {
     let promises=[]
    
     for(let i=0;i<allContainers.length;i++) {
-        let company_span = allContainers[i].querySelector('div[data-id="company-title"]')
+        let company_span = allContainers[i].querySelector('a[data-id="company-title"]')
         let company_text = company_span.textContent.trim()
         let title_a = allContainers[i].querySelector("h2>a")
         let title_text = title_a.textContent.trim()
