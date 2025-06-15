@@ -9,9 +9,14 @@ function copy_job_details() {
     return text_to_copy = [company, title, "HiringCafe", link, "", format_date(new Date())].join("\t")
 }
 
+function copy_job_description() {
+    job_descrption = document.getElementsByTagName("article")[0].textContent
+    return job_descrption
+}
+
 function copy_resume_keywords() {
     
-    job_descrption = document.getElementsByTagName("article")[0].textContent
+    job_descrption = copy_job_description()
     console.debug("Found this text content:" + job_descrption)
     const keywords_promise = GetKeywordsFromJobDescription(GetToken(), job_descrption)
     return keywords_promise.then(keywords=>{

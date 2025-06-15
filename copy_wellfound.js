@@ -16,8 +16,13 @@ function copy_job_details() {
     return text_to_copy = [company, title, "Wellfound", link, "", format_date(new Date())].join("\t")
 }
 
-function copy_resume_keywords() {
+function copy_job_description() {
     job_descrption = document.getElementById("job-description").textContent
+    return job_descrption
+}
+
+function copy_resume_keywords() {
+    job_descrption = copy_job_description()
     const keywords_promise = GetKeywordsFromJobDescription(GetToken(), job_descrption)
     return keywords_promise.then(keywords=>{
         return keywords.join("\r\n")

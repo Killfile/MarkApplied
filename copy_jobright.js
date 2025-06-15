@@ -21,9 +21,7 @@ function extractTerms(arr) {
     });
 }
 
-
-
-function copy_resume_keywords() {
+function copy_job_description() {
     responsibilities = document.querySelector("section.index_sectionContent__zTR73:nth-child(3) > div:nth-child(1) > h2:nth-child(2)").parentElement.parentElement.textContent
     required = document.querySelector("div.index_flex-col__Y_QL8:nth-child(4)").textContent
     try {
@@ -35,6 +33,13 @@ function copy_resume_keywords() {
     
 
     job_descrption = responsibilities + "\r\n" + required + "\r\n" + preferred
+    return job_descrption
+}
+
+
+
+function copy_resume_keywords() {
+    job_descrption = copy_job_description()
     console.log("Job description extracted as: " + job_descrption)
     const keywords_promise = GetKeywordsFromJobDescription(GetToken(), job_descrption)
     return keywords_promise.then(keywords=>{

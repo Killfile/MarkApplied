@@ -34,14 +34,7 @@
 
     function generate_resume(skills, company, title) {
       url = window.location.origin
-      if (url.includes("linkedin") === true) 
-        { 
-          generate_resume_by_get(skills, company, title)
-        }
-        else 
-        { 
-          generate_resume_by_post(skills, company, title, true) //add true to use fetch
-        }
+      generate_resume_by_post(skills, company, title, job_description, true) //add true to use fetch
     }
 
     function generate_resume_by_get(skills, company, title) {
@@ -83,7 +76,7 @@
     }
   
 
-    function generate_resume_by_post(skills, company, title, useFetch=false) {
+    function generate_resume_by_post(skills, company, title, job_description, useFetch=false) {
       array_argument = "[\"" + skills.replaceAll("\r\n","\",\"") + "\"]"
       
       if(useFetch == false)
@@ -103,6 +96,7 @@
             "skills": JSON.parse(array_argument),
             "company": company,
             "title": title,
+            "job_description": job_description
           }
           postDataByFetch(url,data)
         }
@@ -143,10 +137,11 @@
             console.info("Found deets: " + job_details)
             company = job_details[0]
             title = job_details[1].replace("/"," or ")
+            job_description = copy_job_description()
             text_to_copy = copy_resume_keywords()
               .then( blink_snackbar("Launching Resazine..."))
               .then(skills=>skills.replaceAll("C#","C%23"))
-              .then(skills=>generate_resume(skills, company, title))
+              .then(skills=>generate_resume(skills, company, title, job_description))
           }
           catch(error) {
             console.error(error)

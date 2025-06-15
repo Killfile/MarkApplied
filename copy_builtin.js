@@ -20,7 +20,7 @@ function copy_job_details() {
     return text_to_copy = [company, title, "Builtin", link, "", format_date(new Date())].join("\t")
 }
 
-function copy_resume_keywords() {
+function copy_job_description() {
     job_descrption_element = document.querySelector(".bg-white.rounded-3.p-md.mb-sm.overflow-hidden")
     if(job_descrption_element == null) {
         job_descrption_element = document.querySelector(".col-12.col-lg-6.mb-sm.mb-lg-0") 
@@ -28,6 +28,11 @@ function copy_resume_keywords() {
     
     
     job_descrption = job_descrption_element.textContent
+    return job_descrption
+}
+
+function copy_resume_keywords() {
+    job_descrption = copy_job_description()
     console.log(`Found this job text:${job_descrption}`)
     const keywords_promise = GetKeywordsFromJobDescription(GetToken(), job_descrption)
     return keywords_promise.then(keywords=>{
